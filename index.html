@@ -95,7 +95,7 @@ img{display:block}
 .lanyard canvas{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:1}
 .ly-card{position:absolute;left:0;top:0;width:220px;height:360px;transform-origin:50% 0;cursor:grab;touch-action:none;will-change:transform;outline:none;border-radius:14px;z-index:2}
 .ly-card:focus-visible .ly-face{outline:3px solid #121212;outline-offset:3px}
-@media (pointer:coarse){.ly-card{touch-action:pan-y}}
+@media (hover:none) and (pointer:coarse){.ly-card{touch-action:manipulation;cursor:pointer}}
 .ly-card img,.ly-card svg{-webkit-user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none}
 .ly-clip{position:absolute;left:50%;top:0;width:17px;height:33px;transform:translateX(-50%);border-radius:4px;background:linear-gradient(90deg,#f4f3ef,#a6a8b0 50%,#ecebe7);box-shadow:0 1px 3px rgba(0,0,0,.35);z-index:2}
 .ly-inner{position:absolute;left:0;right:0;top:21px;height:330px;transform-origin:50% 50%;will-change:transform}
@@ -738,7 +738,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
     var drag=null;
     function local(e){var r=root.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top];}
     card.addEventListener("dragstart",function(e){e.preventDefault();});
+    /* phones: no dragging, just tap to flip; scrolling nudges it instead */
+    var touchOnly=window.matchMedia("(hover:none) and (pointer:coarse)");
+    card.addEventListener("click",function(){if(touchOnly.matches)flip();});
+    /* scrolling leans the badge a little, like wind; it swings back when the page settles */
+    var sTarget=0,sV=0,lastSY=window.scrollY,lastT=performance.now();
+    window.addEventListener("scroll",function(){var now=performance.now(),dt=Math.max(8,now-lastT),y=window.scrollY;if(touchOnly.matches&&!reduced)sTarget=Math.max(-4,Math.min(4,(y-lastSY)/dt));lastSY=y;lastT=now;},{passive:true});
     card.addEventListener("pointerdown",function(e){
+      if(touchOnly.matches)return;
       if(e.button>0)return;var p=local(e),T=pts[iT];
       drag={id:e.pointerId,ox:T.x-p[0],oy:T.y-p[1],tx:T.x,ty:T.y,sx:p[0],sy:p[1],moved:false};
       pts[iT].w=0;card.setPointerCapture(e.pointerId);card.style.cursor="grabbing";
@@ -757,6 +764,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
         acc-=STEP;steps++;t+=STEP;
         if(drag){var T=pts[iT];T.px=T.x;T.py=T.y;T.x+=(drag.tx-T.x)*.35;T.y+=(drag.ty-T.y)*.35;}
         var C=pts[iC];
+        if(performance.now()-lastT>90)sTarget=0;sV+=(sTarget-sV)*.06;
+        if(Math.abs(sV)>.002){var wind=Math.max(-2400,Math.min(2400,sV*900))*STEP*STEP;for(var q=0;q<pts.length;q++)if(pts[q].w>0)pts[q].x+=wind;}
         if(!reduced&&!drag){C.x+=(22*Math.sin(t*.7)+12*Math.sin(t*1.9))*STEP*STEP;}
         integrate(STEP,GRAVITY,.992);solve(ITER);
         var vx=(C.x-C.px)/STEP;spinStep(STEP,vx*.03+(reduced?0:.6*Math.sin(t*.5)));
