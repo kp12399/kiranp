@@ -46,7 +46,7 @@ img{display:block}
 .nav .wrap{display:flex;justify-content:center}
 .navbar{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 8px;box-shadow:var(--shadow)}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.03em}
-.logo i{width:36px;height:36px;border-radius:50%;background:var(--tang);color:#161616;display:grid;place-items:center;font-style:normal;font-size:14px}
+.logo svg{width:30px;height:30px;flex:none;display:block;transition:transform .2s}.logo:hover svg{transform:rotate(-6deg)}
 .links{display:flex;gap:2px;align-items:center}
 .links a{text-decoration:none;font-weight:600;font-size:14.5px;padding:9px 14px;border-radius:999px;color:var(--ink-2)}
 .links a:hover{color:var(--ink);background:var(--bg)}
@@ -361,7 +361,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
 <nav class="nav" aria-label="Main">
   <div class="wrap">
     <div class="navbar">
-      <a class="logo" href="#top"><i>KP</i><span>Kiran Patel</span></a>
+      <a class="logo" href="#top" aria-label="Kiran Patel, home"><svg viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="30" aria-hidden="true"><path d="M22 36 104 120 30 212" stroke-linejoin="round"/><path d="M142 226V40h42a49 49 0 0 1 0 98h-42"/></svg><span>Kiran Patel</span></a>
       <div class="links">
         <a href="#work">Work</a>
         <a href="#ai" class="opt">AI</a>
