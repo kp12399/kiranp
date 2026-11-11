@@ -78,6 +78,7 @@ img{display:block}
 @keyframes rotin{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
 .chip{font-size:13.5px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
 .ctas{display:flex;flex-wrap:wrap;gap:10px}
+@media (min-width:921px){.ctas{display:none}}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-weight:700;font-size:15.5px;text-decoration:none;padding:13px 22px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:transform .2s,background .2s,border-color .2s,color .2s}
 .btn:hover{transform:translateY(-2px);border-color:var(--ink)}
 .btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
