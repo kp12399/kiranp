@@ -769,7 +769,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
 
   /* ---------- hero rotator: who I've designed for ---------- */
   (function(){
-    var who=["fleet managers","real estate agents","oil-well operators","hotel guests","patients","food lovers","students"],i=0,box=document.getElementById("rot");
+    var who=["fleet managers","real estate agents","oil-well operators","hotel guests","patients","food lovers","students","financial advisors","home owners","service workers","parents","families","babysitters","delivery drivers"],i=0,box=document.getElementById("rot");
     if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
     setInterval(function(){i=(i+1)%who.length;var s=document.createElement("span");s.className="in";s.textContent=who[i];box.replaceChildren(s);},2200);
   })();
